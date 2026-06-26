@@ -1,0 +1,59 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+.navbar{
+    padding:20px 0;
+}
+
+.navbar-brand{
+    font-size:1.5rem;
+}
+
+.nav-link{
+    color:white !important;
+}
+.hero{
+    min-height:80vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.hero p{
+    color:#cbd5e1;
+    .hero h1{
+    max-width: 1000px;
+    margin:auto;
+}
+}
+
+.btn-primary{
+    background:#8b5cf6;
+    border:none;
+}
+.hero h1{
+    font-size:4rem;
+    font-weight:bold;
+}
+
+.hero p{
+    font-size:1.2rem;
+}
+.btn{
+    transition:0.3s ease;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+.nav-link:hover{
+    color:#8b5cf6 !important;
+}
