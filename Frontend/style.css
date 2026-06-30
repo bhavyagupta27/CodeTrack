@@ -257,3 +257,16 @@ body{
     box-shadow:0 5px 15px rgba(0,0,0,0.3);
     transition:0.3s ease;
 }
+.dashboard-info{
+    background:#0f172a;
+    padding:20px;
+    border-radius:15px;
+    transition:.3s ease;
+}
+.dashboard-info:hover{
+    transform:translateY(-5px);
+    background:#172033;
+}
+.progress-bar{
+    transition:width 1.5s ease;
+}
