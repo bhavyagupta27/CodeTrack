@@ -41,10 +41,6 @@ body{
     font-size:clamp(2.5rem,5vw,4rem);
     font-weight:bold;
 }
-.btn-primary{
-    background:#8b5cf6;
-    border:none;
-}
 .btn{
     transition:0.3s ease;
 }
@@ -137,18 +133,10 @@ body{
     transform:translateY(-8px);
     box-shadow:0 20px 40px rgba(0,0,0,0.4);
 }
-
-.dashboard-info{
-    background:#0f172a;
-    padding:20px;
-    border-radius:15px;
-}
-
 .dashboard-info h5{
     color:#cbd5e1;
     margin-bottom:8px;
 }
-
 .dashboard-info h3{
     color:#8b5cf6;
     font-weight:bold;
@@ -247,7 +235,6 @@ body{
     border:none;
     transition:0.3s ease;
 }
-
 .btn-primary:hover{
     background:#290a5b;
     transform:translateY(-3px);

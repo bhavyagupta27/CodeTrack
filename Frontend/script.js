@@ -22,10 +22,3 @@ window.addEventListener("scroll",()=>{
 }
 });
 
-const startBtn = document.querySelector("#startBtn");
-const dashboard = document.querySelector("#dashboard");
-startBtn.addEventListener("click",()=>{
-    dashboard.scrollIntoView({
-    behavior:"smooth"
-});
-});
