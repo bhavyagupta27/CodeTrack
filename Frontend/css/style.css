@@ -27,7 +27,7 @@ body{
     transition:0.3s ease;
 }
 .hero{
-    min-height:80vh;
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -256,4 +256,70 @@ body{
 }
 .progress-bar{
     transition:width 1.5s ease;
+}
+.login-page{
+    min-height:calc(100vh - 80px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.login-card{
+    background:#1e293b;
+    border:none;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    transition:0.3s ease;
+}
+.login-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+.login-card h2{
+    color:white;
+    font-weight:bold;
+}
+.login-card p{
+    color:#cbd5e1;
+}
+.login-card .form-control{
+    background:#0f172a;
+    border:1px solid #334155;
+    color:white;
+}
+.login-card .form-control:focus{
+    border-color:#8b5cf6;
+    box-shadow:0 0 10px rgba(139,92,246,0.4);
+    background:#0f172a;
+    color:white;
+}
+.login-card .form-label{
+    color:white;
+}
+.login-card .form-check-label{
+    color:#cbd5e1;
+}
+.login-card .form-control::placeholder{
+    color:#94a3b8;
+}
+#welcomeUser{
+    color:#8b5cf6;
+    font-size:1.8rem;
+    font-weight:600;
+}
+.welcome-text{
+    color:#8b5cf6;
+    font-size:1.8rem;
+    font-weight:600;
+    margin-top:25px;
+    margin-bottom:10px;
+}
+#logoutBtn{
+    margin-left:20px;
+    padding:6px 18px;
+    border-radius:8px;
+    transition:.3s ease;
+}
+#logoutBtn:hover{
+    background:#8b5cf6;
+    border-color:#8b5cf6;
 }
