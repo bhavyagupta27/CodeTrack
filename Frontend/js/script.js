@@ -1,25 +1,25 @@
 const counters = document.querySelectorAll(".counter");
-counters.forEach((counter)=>{
-    const target =+ counter.dataset.target;
-    let count =0;
+counters.forEach((counter) => {
+    const target = + counter.dataset.target;
+    let count = 0;
     const increment = target / 100;
-    function updateCounter(){
+    function updateCounter() {
         count += increment;
         counter.innerText = Math.min(Math.ceil(count), target);
-        
-    if(count < target){
 
-        setTimeout(updateCounter,20);
+        if (count < target) {
+
+            setTimeout(updateCounter, 20);
+        }
     }
-}
-updateCounter();
+    updateCounter();
 })
 
 const navbar = document.querySelector("#navbar");
-window.addEventListener("scroll",()=>{
-    if(window.scrollY > 50){
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
         navbar.classList.add("scrolled");
-  } else{
+    } else {
         navbar.classList.remove("scrolled");
     }
 });
@@ -28,31 +28,31 @@ const welcomeUser = document.querySelector("#welcomeUser");
 
 const savedEmail = localStorage.getItem("email");
 
-if(!savedEmail){
+if (!savedEmail) {
 
     window.location.href = "login.html";
 
 }
-else{
+else {
 
     welcomeUser.innerText = `Welcome, ${savedEmail}`;
 
 }
 const logoutBtn = document.querySelector("#logoutBtn");
 
-if(savedEmail){
+if (savedEmail) {
 
     welcomeUser.innerText = `Welcome, ${savedEmail}`;
 
     logoutBtn.style.display = "inline-block";
 
 }
-else{
+else {
 
     logoutBtn.style.display = "none";
 
 }
-logoutBtn.addEventListener("click",()=>{
+logoutBtn.addEventListener("click", () => {
 
     localStorage.removeItem("email");
 

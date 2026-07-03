@@ -8,27 +8,27 @@ loginForm.addEventListener("submit", (event) => {
     const email = document.querySelector("#email").value;
     const password = document.querySelector("#password").value;
 
-     if(email === "" || password === ""){
-    alert("Please fill all fields!");
-    return;
-     }
+    if (email === "" || password === "") {
+        alert("Please fill all fields!");
+        return;
+    }
 
     const correctEmail = "admin@gmail.com";
     const correctPassword = "123456";
 
-    if(email === correctEmail && password === correctPassword){
+    if (email === correctEmail && password === correctPassword) {
 
-    localStorage.setItem("email", email);
+        localStorage.setItem("email", email);
 
-    alert("Login Successful!");
+        alert("Login Successful!");
 
-    window.location.href = "index.html";
+        window.location.href = "index.html";
     }
-else{
+    else {
 
-    alert("Invalid Email or Password");
+        alert("Invalid Email or Password");
 
-}
+    }
 
 });
 
@@ -38,7 +38,7 @@ const togglePassword = document.querySelector("#togglePassword");
 
 togglePassword.addEventListener("click", () => {
 
-    if(password.type === "password"){
+    if (password.type === "password") {
 
         password.type = "text";
 
@@ -46,7 +46,7 @@ togglePassword.addEventListener("click", () => {
 
     }
 
-    else{
+    else {
 
         passwordInput.type = "password";
 
