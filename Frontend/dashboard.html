@@ -107,7 +107,7 @@
                         <div class="text-center mb-4">
 
                             <img src="https://ui-avatars.com/api/?name=Bhavya+Gupta&background=8b5cf6&color=fff&size=120"
-                                class="rounded-circle" width="120" height="120">
+                                class="rounded-circle img-fluid" width="120" height="120">
 
                         </div>
 
@@ -132,101 +132,105 @@
                         <h6 class="text-center">Placement Readiness</h6>
 
                         <div class="progress mt-2" style="height:10px;">
-                            <div class="progress mt-2" style="height:10px;">
-                                <div class="progress-bar bg-success" id="progressBar"></div>
-                            </div>
-
-                            <p class="text-center mt-2 fw-bold" id="progressText"></p>
-                            <p class="text-center">
-                                <span class="badge bg-success">
-                                    Active Learner
-                                </span>
-                            </p>
+                            <div class="progress-bar bg-success" id="progressBar"></div>
                         </div>
 
-                    </div>
+                        <p class="text-center mt-2 fw-bold" id="progressText"></p>
 
-                    <!-- Right Side -->
-                    <div class="col-lg-8">
-                        <div class="row g-4">
-
-                            <div class="col-md-4">
-                                <div class="stats-card text-center">
-                                    <h3 id="questionsSolved">0</h3>
-                                    <p>Questions Solved</p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="stats-card text-center">
-                                    <h3 id="githubCommits">0</h3>
-                                    <p>GitHub Commits</p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="stats-card text-center">
-                                    <h3 id="dayStreak">0</h3>
-                                    <p>Day Streak</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="dashboard-card mt-4">
-
-                            <h4>Today's Goals</h4>
-
-                            <hr>
-
-                            <div class="form-check mb-2">
-
-                                <input class="form-check-input" type="checkbox" id="goal1">
-
-                                <label class="form-check-label" for="goal1">
-
-                                    DSA Practice
-
-                                </label>
-
-                            </div>
-
-                            <div class="form-check mb-2">
-
-                                <input class="form-check-input" type="checkbox" id="goal2">
-
-                                <label class="form-check-label" for="goal2">
-                                    Backend Learning
-                                </label>
-
-                            </div>
-
-                            <div class="form-check mb-2">
-
-                                <input class="form-check-input" type="checkbox" id="goal3">
-
-                                <label class="form-check-label" for="goal3">
-                                    GSSoC
-                                </label>
-
-                            </div>
-
-                            <div class="form-check">
-
-                                <input class="form-check-input" type="checkbox" id="goal4">
-
-                                <label class="form-check-label" for="goal4">
-                                    Project Development
-                                </label>
-
-                            </div>
-
-                        </div>
+                        <p class="text-center">
+                            <span class="badge bg-success">
+                                Active Learner
+                            </span>
+                        </p>
                     </div>
 
                 </div>
 
+                <!-- Right Side -->
+                <div class="col-lg-8">
+                    <div class="row g-4">
+
+                        <div class="col-md-4">
+                            <div class="stats-card text-center">
+                                <h3 id="questionsSolved">0</h3>
+                                <p>Questions Solved</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="stats-card text-center">
+                                <h3 id="githubCommits">0</h3>
+                                <p>GitHub Commits</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="stats-card text-center">
+                                <h3 id="dayStreak">0</h3>
+                                <p>Day Streak</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="dashboard-card mt-4">
+
+                        <h4>Today's Goals</h4>
+
+                        <p id="goalCounter" class="text-success fw-bold mb-2">
+                            0 / 4 Completed
+                        </p>
+
+                        <hr>
+
+                        <div class="form-check mb-2">
+
+                            <input class="form-check-input" type="checkbox" id="goal1">
+
+                            <label class="form-check-label" for="goal1">
+
+                                DSA Practice
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-check mb-2">
+
+                            <input class="form-check-input" type="checkbox" id="goal2">
+
+                            <label class="form-check-label" for="goal2">
+                                Backend Learning
+                            </label>
+
+                        </div>
+
+                        <div class="form-check mb-2">
+
+                            <input class="form-check-input" type="checkbox" id="goal3">
+
+                            <label class="form-check-label" for="goal3">
+                                GSSoC
+                            </label>
+
+                        </div>
+
+                        <div class="form-check">
+
+                            <input class="form-check-input" type="checkbox" id="goal4">
+
+                            <label class="form-check-label" for="goal4">
+                                Project Development
+                            </label>
+
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
+
+        </div>
 
     </section>
     <footer class="footer py-4" id="footer">
@@ -241,6 +245,10 @@
                         Your all-in-one placement preparation dashboard.
                     </p>
                 </div>
+
+                <p class="text-secondary small mt-3 mb-0">
+                    © 2026 CodeTrack | Built with ❤️ by Bhavya Gupta
+                </p>
 
                 <div class="col-md-6 text-md-end">
 

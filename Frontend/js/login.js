@@ -1,4 +1,3 @@
-
 const loginForm = document.querySelector("#loginForm");
 
 loginForm.addEventListener("submit", (event) => {

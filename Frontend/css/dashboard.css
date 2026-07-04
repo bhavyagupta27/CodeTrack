@@ -38,18 +38,17 @@
     font-size:15px;
 
 }
-#logoutBtn{
-    margin-left: 7px;
-}
-#sidebarName{
-  margin-left: 7px;  
-}
+#logoutBtn,
+#sidebarName,
 #sidebarEmail{
-  margin-left: 7px;  
+    margin-left:7px;
 }
 .dashboard-card,
 .stats-card{
-    transition:0.3s;
+
+    transition:transform .3s ease,
+               box-shadow .3s ease;
+
 }
 
 .dashboard-card:hover,
@@ -58,5 +57,12 @@
     transform:translateY(-8px);
 
     box-shadow:0 12px 30px rgba(139,92,246,.35);
+
+}  
+@media(max-width:768px){
+
+    .offcanvas{
+        width:240px;
+    }
 
 }

@@ -42,11 +42,7 @@ footerLogout.addEventListener("click", (event) => {
     window.location.href = "login.html";
 
 });
-const brand = document.querySelector(".navbar-brand");
 
-brand.addEventListener("click", (event) => {
-    event.preventDefault();
-});
 const questionsSolved = 150;
 const githubCommits = 200;
 const dayStreak = 15;
@@ -59,44 +55,58 @@ document.querySelector("#dayStreak").innerText = "🔥 " + dayStreak;
 
 const goals = document.querySelectorAll(".form-check-input");
 
-console.log(goals);
-
 goals.forEach((goal) => {
-
-    console.log("Found:", goal.id);
-
     const savedGoal = localStorage.getItem(goal.id);
-
-    if(savedGoal === "true"){
+    if (savedGoal === "true") {
         goal.checked = true;
     }
-
-    goal.addEventListener("change", function(){
-
-        console.log("Clicked:", goal.id);
-
+    goal.addEventListener("change", function () {
         localStorage.setItem(goal.id, goal.checked);
-
+        updateGoalCounter();
     });
-
 });
-const progress = 82;
 
+const progress = 82;
 document.querySelector("#progressBar").style.width = progress + "%";
 document.querySelector("#progressText").innerText = progress + "%";
-
 const hour = new Date().getHours();
-
 let greeting = "";
-
-if(hour < 12){
+const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
+if (hour < 12) {
     greeting = "Good Morning ☀️";
 }
-else if(hour < 17){
+else if (hour < 17) {
     greeting = "Good Afternoon 🌤️";
 }
-else{
+else {
     greeting = "Good Evening 🌙";
 }
 
-document.querySelector("#greeting").innerText = greeting + ", " + name + "!";
+document.querySelector("#greeting").innerText =
+    greeting + ", " + formattedName + "!";
+const goalCounter = document.querySelector("#goalCounter");
+function updateGoalCounter() {
+
+    let completed = 0;
+
+    goals.forEach((goal) => {
+
+        if (goal.checked) {
+            completed++;
+        }
+
+    });
+
+    if (completed === goals.length) {
+
+        goalCounter.innerText = `${completed} / ${goals.length} Completed 🎉`;
+
+    } else {
+
+        goalCounter.innerText = `${completed} / ${goals.length} Completed`;
+
+    }
+
+}
+
+updateGoalCounter();
