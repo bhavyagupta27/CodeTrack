@@ -36,29 +36,13 @@ window.addEventListener("scroll", () => {
 
 });
 
-// Login Check
+// Welcome User
 const welcomeUser = document.querySelector("#welcomeUser");
-const logoutBtn = document.querySelector("#logoutBtn");
 
 const savedEmail = localStorage.getItem("email");
 
-if (!savedEmail) {
-
-    window.location.href = "login.html";
-
+if (savedEmail) {
+    welcomeUser.innerText = `Welcome, ${savedEmail}`;
+} else {
+    welcomeUser.innerText = "Welcome Guest 👋";
 }
-
-// Show Logged-in User
-welcomeUser.innerText = `Welcome, ${savedEmail}`;
-logoutBtn.style.display = "inline-block";
-
-// Logout
-logoutBtn.addEventListener("click", () => {
-
-    localStorage.removeItem("email");
-
-    alert("Logged Out Successfully!");
-
-    window.location.href = "login.html";
-
-});
