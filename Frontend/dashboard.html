@@ -87,6 +87,8 @@
 
     </div>
 
+
+
     <section class="dashboard py-5" id="dashboard">
 
         <div class="container">
@@ -106,9 +108,7 @@
 
                         <div class="text-center mb-4">
 
-                            <img src="https://ui-avatars.com/api/?name=Bhavya+Gupta&background=8b5cf6&color=fff&size=120"
-                                class="rounded-circle img-fluid" width="120" height="120">
-
+                            <img id="profileAvatar" src="" class="rounded-circle img-fluid" width="120" height="120">
                         </div>
 
                         <h3 class="text-center">👤 Profile</h3>
@@ -125,8 +125,17 @@
 
                         </p>
 
-                        <p class="text-center">🎯 Goal: Crack Product-Based Company</p>
+                        <p class="text-center" id="userGoal">
+                            🎯 Goal: Crack Product-Based Company
+                        </p>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                data-bs-target="#editProfileModal">
 
+                                ✏️ Edit Profile
+
+                            </button>
+                        </div>
                         <hr>
 
                         <h6 class="text-center">Placement Readiness</h6>
@@ -226,6 +235,63 @@
                         </div>
 
                     </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="editProfileModal" tabindex="-1">
+
+            <div class="modal-dialog">
+
+                <div class="modal-content bg-dark text-white">
+
+                    <div class="modal-header">
+
+                        <h5 class="modal-title">
+                            Edit Profile
+                        </h5>
+
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
+                        </button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Name
+                            </label>
+
+                            <input type="text" class="form-control" id="editName">
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Goal
+                            </label>
+
+                            <input type="text" class="form-control" id="editGoal">
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button class="btn btn-success" id="saveProfile">
+
+                            Save Changes
+
+                        </button>
+
+                    </div>
+
                 </div>
 
             </div>

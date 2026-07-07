@@ -9,9 +9,11 @@ userEmail.innerText = savedEmail;
 
 const name = savedEmail.split("@")[0];
 
-document.querySelector("#userName").innerText = name;
+const displayName = localStorage.getItem("name") || name;
 
-document.querySelector("#sidebarName").innerText = name;
+document.querySelector("#userName").innerText = displayName;
+
+document.querySelector("#sidebarName").innerText = displayName;
 
 document.querySelector("#sidebarEmail").innerText = savedEmail;
 
@@ -110,3 +112,72 @@ function updateGoalCounter() {
 }
 
 updateGoalCounter();
+
+const editName = document.querySelector("#editName");
+const editGoal = document.querySelector("#editGoal");
+
+const saveProfile = document.querySelector("#saveProfile");
+
+const userGoal = document.querySelector("#userGoal");
+
+const savedName = localStorage.getItem("name");
+const savedUserGoal = localStorage.getItem("goal");
+
+if (savedName) {
+    document.querySelector("#userName").innerText = savedName;
+    document.querySelector("#sidebarName").innerText = savedName;
+    document.querySelector("#greeting").innerText =
+        greeting + ", " + savedName + "!";
+}
+
+if (savedUserGoal) {
+    userGoal.innerText = "🎯 Goal: " + savedUserGoal;
+}
+
+document.querySelector('[data-bs-target="#editProfileModal"]')
+    .addEventListener("click", () => {
+
+        editName.value =
+            document.querySelector("#userName").innerText;
+
+        editGoal.value =
+            userGoal.innerText.replace("🎯 Goal: ", "");
+
+    });
+
+saveProfile.addEventListener("click", () => {
+
+    const newName = editName.value.trim();
+    const newGoal = editGoal.value.trim();
+
+    if (newName !== "") {
+
+        document.querySelector("#userName").innerText = newName;
+        document.querySelector("#sidebarName").innerText = newName;
+
+        avatar.src =
+            `https://ui-avatars.com/api/?name=${newName}&background=8b5cf6&color=fff&size=120`;
+
+        document.querySelector("#greeting").innerText =
+            greeting + ", " + newName + "!";
+
+        localStorage.setItem("name", newName);
+
+    }
+
+    if (newGoal !== "") {
+
+        userGoal.innerText = "🎯 Goal: " + newGoal;
+
+        localStorage.setItem("goal", newGoal);
+
+    }
+
+    const modal =
+        bootstrap.Modal.getInstance(
+            document.querySelector("#editProfileModal")
+        );
+
+    modal.hide();
+
+});
