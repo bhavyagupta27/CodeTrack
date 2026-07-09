@@ -128,14 +128,16 @@
                         <p class="text-center" id="userGoal">
                             🎯 Goal: Crack Product-Based Company
                         </p>
+
                         <div class="text-center mt-3">
-                            <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                            <button id="editProfileBtn" class="btn btn-outline-primary" data-bs-toggle="modal"
                                 data-bs-target="#editProfileModal">
 
                                 ✏️ Edit Profile
 
                             </button>
                         </div>
+
                         <hr>
 
                         <h6 class="text-center">Placement Readiness</h6>
@@ -245,7 +247,7 @@
 
             <div class="modal-dialog">
 
-                <div class="modal-content bg-dark text-white">
+                <div class="modal-content">
 
                     <div class="modal-header">
 
@@ -253,38 +255,26 @@
                             Edit Profile
                         </h5>
 
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
+                        <button class="btn-close" data-bs-dismiss="modal">
                         </button>
 
                     </div>
 
                     <div class="modal-body">
 
-                        <div class="mb-3">
+                        <label>Name</label>
 
-                            <label class="form-label">
-                                Name
-                            </label>
+                        <input type="text" class="form-control mb-3" id="editName">
 
-                            <input type="text" class="form-control" id="editName">
+                        <label>Goal</label>
 
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Goal
-                            </label>
-
-                            <input type="text" class="form-control" id="editGoal">
-
-                        </div>
+                        <input type="text" class="form-control" id="editGoal">
 
                     </div>
 
                     <div class="modal-footer">
 
-                        <button class="btn btn-success" id="saveProfile">
+                        <button class="btn btn-primary" id="saveProfile">
 
                             Save Changes
 
@@ -299,6 +289,31 @@
         </div>
 
     </section>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+
+    <div id="successToast"
+         class="toast align-items-center text-bg-success border-0"
+         role="alert">
+
+        <div class="d-flex">
+
+            <div class="toast-body">
+                ✅ Profile Updated Successfully
+            </div>
+
+            <button
+                type="button"
+                class="btn-close btn-close-white me-2 m-auto"
+                data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
     <footer class="footer py-4" id="footer">
 
         <div class="container">

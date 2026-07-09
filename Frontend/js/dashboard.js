@@ -11,6 +11,11 @@ const name = savedEmail.split("@")[0];
 
 const displayName = localStorage.getItem("name") || name;
 
+const avatar = document.querySelector("#profileAvatar");
+
+avatar.src =
+`https://ui-avatars.com/api/?name=${displayName}&background=8b5cf6&color=fff&size=120`;
+
 document.querySelector("#userName").innerText = displayName;
 
 document.querySelector("#sidebarName").innerText = displayName;
@@ -154,7 +159,6 @@ saveProfile.addEventListener("click", () => {
 
         document.querySelector("#userName").innerText = newName;
         document.querySelector("#sidebarName").innerText = newName;
-
         avatar.src =
             `https://ui-avatars.com/api/?name=${newName}&background=8b5cf6&color=fff&size=120`;
 
@@ -179,5 +183,13 @@ saveProfile.addEventListener("click", () => {
         );
 
     modal.hide();
+
+    const toast = new bootstrap.Toast(
+    document.querySelector("#successToast") {
+        delay: 3000
+    }
+);
+
+toast.show();
 
 });
