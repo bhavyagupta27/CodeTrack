@@ -14,7 +14,7 @@ const displayName = localStorage.getItem("name") || name;
 const avatar = document.querySelector("#profileAvatar");
 
 avatar.src =
-`https://ui-avatars.com/api/?name=${displayName}&background=8b5cf6&color=fff&size=120`;
+    `https://ui-avatars.com/api/?name=${displayName}&background=8b5cf6&color=fff&size=120`;
 
 document.querySelector("#userName").innerText = displayName;
 
@@ -29,6 +29,8 @@ logoutBtn.addEventListener("click", (event) => {
     event.preventDefault();
 
     localStorage.removeItem("email");
+    localStorage.removeItem("name");
+    localStorage.removeItem("goal");
 
     alert("Logged Out Successfully!");
 
@@ -43,6 +45,8 @@ footerLogout.addEventListener("click", (event) => {
     event.preventDefault();
 
     localStorage.removeItem("email");
+    localStorage.removeItem("name");
+    localStorage.removeItem("goal");
 
     alert("Logged Out Successfully!");
 
@@ -78,7 +82,9 @@ document.querySelector("#progressBar").style.width = progress + "%";
 document.querySelector("#progressText").innerText = progress + "%";
 const hour = new Date().getHours();
 let greeting = "";
-const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
+const formattedName =
+    displayName.charAt(0).toUpperCase() +
+    displayName.slice(1);
 if (hour < 12) {
     greeting = "Good Morning ☀️";
 }
@@ -113,10 +119,22 @@ function updateGoalCounter() {
         goalCounter.innerText = `${completed} / ${goals.length} Completed`;
 
     }
+    const today = new Date().getDay();
 
+    const index = today === 0 ? 6 : today - 1;
+
+    weeklyProgress[index] = completed;
+
+    localStorage.setItem(
+        "weeklyProgress",
+        JSON.stringify(weeklyProgress)
+    );
+
+    progressChart.data.datasets[0].data = weeklyProgress;
+
+    progressChart.update();
 }
 
-updateGoalCounter();
 
 const editName = document.querySelector("#editName");
 const editGoal = document.querySelector("#editGoal");
@@ -185,11 +203,105 @@ saveProfile.addEventListener("click", () => {
     modal.hide();
 
     const toast = new bootstrap.Toast(
-    document.querySelector("#successToast") {
-        delay: 3000
+        document.querySelector("#successToast"),
+        {
+            delay: 3000
+        }
+    );
+
+    toast.show();
+
+});
+const ctx = document.getElementById("progressChart");
+let weeklyProgress = JSON.parse(localStorage.getItem("weeklyProgress")) || [2, 4, 3, 6, 5, 8, 7];
+const progressChart = new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        datasets: [{
+            label: "Questions Solved",
+            data: weeklyProgress,
+            borderColor: "#8b5cf6",
+            backgroundColor: "rgba(139,92,246,0.2)",
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
     }
-);
+});
+updateGoalCounter();
 
-toast.show();
+const themeToggle = document.querySelector("#themeToggle");
 
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+    document.body.classList.add("light-mode");
+    themeToggle.innerText = "☀️";
+}
+
+themeToggle.addEventListener("click", () => {
+
+    document.body.classList.toggle("light-mode");
+
+    if (document.body.classList.contains("light-mode")) {
+
+        localStorage.setItem("theme", "light");
+        themeToggle.innerText = "☀️";
+
+    } else {
+
+        localStorage.setItem("theme", "dark");
+        themeToggle.innerText = "🌙";
+
+    }
+
+});
+
+const resetBtn = document.querySelector("#resetProgress");
+
+resetBtn.addEventListener("click", () => {
+
+    const confirmReset =
+        confirm("Are you sure you want to reset progress?");
+
+    if (confirmReset) {
+
+        goals.forEach((goal) => {
+            goal.checked = false;
+            localStorage.removeItem(goal.id);
+        });
+
+        weeklyProgress = [2, 4, 1, 3, 5, 2, 4];
+
+        localStorage.setItem(
+            "weeklyProgress",
+            JSON.stringify(weeklyProgress)
+        );
+
+        progressChart.data.datasets[0].data =
+            weeklyProgress;
+
+        progressChart.update();
+
+        updateGoalCounter();
+
+        alert("Progress Reset Successfully!");
+    }
 });

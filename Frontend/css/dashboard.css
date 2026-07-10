@@ -50,7 +50,9 @@
                box-shadow .3s ease;
 
 }
-
+.dashboard-card canvas{
+    max-height:220px;
+}
 .dashboard-card:hover,
 .stats-card:hover{
 
@@ -68,4 +70,36 @@
 }
 #profileAvatar{
     background-color: black;
+}
+body.light-mode {
+    background: #f8f9fa;
+    color: #212529;
+}
+
+body.light-mode .dashboard-card,
+body.light-mode .stats-card {
+    background: white;
+    color: #212529;
+}
+
+body.light-mode .navbar {
+    background: white !important;
+}
+
+body.light-mode .navbar-brand {
+    color: #212529 !important;
+}
+
+body.light-mode .offcanvas {
+    background: white !important;
+    color: #212529 !important;
+}
+.dashboard-card{
+    padding:30px;
+}
+#progressChart{
+    max-height:280px !important;
+}
+.dashboard-card p{
+    margin-bottom:12px;
 }
