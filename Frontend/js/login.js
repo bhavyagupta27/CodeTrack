@@ -21,7 +21,7 @@ loginForm.addEventListener("submit", (event) => {
 
         alert("Login Successful!");
 
-        window.location.href = "index.html";
+        window.location.href = "./dashboard.html";
     }
     else {
 
