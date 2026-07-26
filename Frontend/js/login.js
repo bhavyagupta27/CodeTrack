@@ -12,22 +12,44 @@ loginForm.addEventListener("submit", (event) => {
         return;
     }
 
-    const correctEmail = "admin@gmail.com";
-    const correctPassword = "123456";
+    fetch("http://localhost:3000/login", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        email: email,
+        password: password
+    })
+})
+.then((response) => response.json())
+.then((data) => {
 
-    if (email === correctEmail && password === correctPassword) {
+    if (data.success) {
 
-        localStorage.setItem("email", email);
+        localStorage.setItem("email", data.user.email);
+        localStorage.setItem("name", data.user.name);
 
-        alert("Login Successful!");
+        alert(data.message);
 
-        window.location.href = "./dashboard.html";
+        window.location.href = "dashboard.html";
+
+    } else {
+
+        alert(data.message);
+
     }
-    else {
 
-        alert("Invalid Email or Password");
+})
+.catch((error) => {
 
-    }
+    console.log(error);
+
+    alert("Server Error");
+
+});
+
+
 
 });
 
