@@ -10,13 +10,17 @@ app.use(cors());
 
 const PORT = 3000;
 
-//Temporary Database
+
 const users = [
     {
         id: 1,
         email: "admin@gmail.com",
         password: "123456",
-        name: "Bhavya"
+        name: "Bhavya",
+        questionsSolved: 150,
+        target: 300,
+        githubCommits: 200,
+        dayStreak: 15
     }
 ];
 
@@ -68,6 +72,23 @@ app.post("/login", (req, res) => {
         message: "Invalid Credentials"
     });
 
+});
+
+
+app.post("/dashboard", (req, res) => {
+
+    const { email } = req.body;
+
+    const user = users.find((u) => u.email === email);
+
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: "User not found"
+        });
+    }
+
+    res.json(user);
 });
 
 // Start Server
