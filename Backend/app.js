@@ -20,7 +20,8 @@ const users = [
         questionsSolved: 150,
         target: 300,
         githubCommits: 200,
-        dayStreak: 15
+        dayStreak: 15,
+        goal: "Full Stack Developer"
     }
 ];
 
@@ -32,6 +33,8 @@ app.get("/", (req, res) => {
 
 app.get("/profile", (req, res) => {
 
+    
+
     res.json({
         id: 1,
         name: "Bhavya",
@@ -41,6 +44,39 @@ app.get("/profile", (req, res) => {
 
 });
 
+app.put("/profile", (req, res) => {
+
+    const { email, name, goal } = req.body;
+
+    const user = users.find((u) => u.email === email);
+
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: "User not found"
+        });
+    }
+
+    if (name) {
+        user.name = name;
+    }
+
+    if (goal) {
+        user.goal = goal;
+    }
+
+    res.json({
+        success: true,
+        message: "Profile Updated Successfully",
+        user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            goal: user.goal
+        }
+    });
+
+});
 
 // Login Route
 app.post("/login", (req, res) => {
