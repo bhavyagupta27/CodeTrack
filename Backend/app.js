@@ -1,17 +1,14 @@
 const express = require("express");
-
 const cors = require("cors");
-
 const app = express();
 
 app.use(express.json());
-
 app.use(cors());
 
 const PORT = 3000;
 
-
-const users = [
+// Local temporary database
+let users = [
     {
         id: 1,
         email: "admin@gmail.com",
@@ -26,108 +23,54 @@ const users = [
 ];
 
 // Home Route
-app.get("/", (req, res) => {
-    res.send("🚀 CodeTrack Backend Running");
-});
+app.get("/", (req, res) => res.send("🚀 CodeTrack Backend Running (Local Array Mode)"));
 
+// Login Route
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+    const user = users.find(u => u.email === email && u.password === password);
 
-app.get("/profile", (req, res) => {
-
-    
-
-    res.json({
-        id: 1,
-        name: "Bhavya",
-        email: "admin@gmail.com",
-        goal: "Full Stack Developer"
-    });
-
-});
-
-app.put("/profile", (req, res) => {
-
-    const { email, name, goal } = req.body;
-
-    const user = users.find((u) => u.email === email);
-
-    if (!user) {
-        return res.status(404).json({
-            success: false,
-            message: "User not found"
+    if (user) {
+        return res.json({
+            success: true,
+            message: "Login Successful",
+            user: { id: user.id, name: user.name, email: user.email }
         });
     }
+    res.json({ success: false, message: "Invalid Credentials" });
+});
 
-    if (name) {
-        user.name = name;
+// Profile Route (Get User Data)
+app.post("/profile", (req, res) => {
+    const { email } = req.body;
+    const user = users.find(u => u.email === email);
+
+    if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+    }
+    res.json(user);
+});
+
+// Update Profile Route
+app.put("/profile", (req, res) => {
+    const { email, name, goal } = req.body;
+    const userIndex = users.findIndex(u => u.email === email);
+
+    if (userIndex === -1) {
+        return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    if (goal) {
-        user.goal = goal;
-    }
+    if (name) users[userIndex].name = name;
+    if (goal) users[userIndex].goal = goal;
 
     res.json({
         success: true,
         message: "Profile Updated Successfully",
-        user: {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            goal: user.goal
-        }
+        user: { name: users[userIndex].name, email: users[userIndex].email, goal: users[userIndex].goal }
     });
-
-});
-
-// Login Route
-app.post("/login", (req, res) => {
-
-    const { email, password } = req.body;
-
-    const user = users.find(
-        (u) =>
-            u.email === email &&
-            u.password === password
-    );
-
-  if (user) {
-
-        return res.json({
-            success: true,
-            message: "Login Successful",
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email
-            }
-        });
-
-       }
-
-    res.json({
-        success: false,
-        message: "Invalid Credentials"
-    });
-
-});
-
-
-app.post("/dashboard", (req, res) => {
-
-    const { email } = req.body;
-
-    const user = users.find((u) => u.email === email);
-
-    if (!user) {
-        return res.status(404).json({
-            success: false,
-            message: "User not found"
-        });
-    }
-
-    res.json(user);
 });
 
 // Start Server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-}); 
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
