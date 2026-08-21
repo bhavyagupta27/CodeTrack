@@ -18,7 +18,9 @@ let users = [
         target: 300,
         githubCommits: 200,
         dayStreak: 15,
-        goal: "Full Stack Developer"
+        goal: "Full Stack Developer",
+        goals: [false, false, false, false], // Tracks your 4 daily checkboxes
+        weeklyProgress: [2, 4, 3, 6, 5, 8, 7] // Tracks the chart
     }
 ];
 
@@ -69,8 +71,22 @@ app.put("/profile", (req, res) => {
         user: { name: users[userIndex].name, email: users[userIndex].email, goal: users[userIndex].goal }
     });
 });
+// Save Daily Goals and Progress
+app.put("/progress", (req, res) => {
+    const { email, goals, weeklyProgress } = req.body;
+    const userIndex = users.findIndex(u => u.email === email);
 
+    if (userIndex === -1) {
+        return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (goals) users[userIndex].goals = goals;
+    if (weeklyProgress) users[userIndex].weeklyProgress = weeklyProgress;
+
+    res.json({ success: true, message: "Progress synced to backend!" });
+});
 // Start Server
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+
