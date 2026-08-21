@@ -59,9 +59,9 @@ const togglePassword = document.querySelector("#togglePassword");
 
 togglePassword.addEventListener("click", () => {
 
-    if (password.type === "password") {
+    if (passwordInput.type === "password") {
 
-        password.type = "text";
+        passwordInput.type = "text";
 
         togglePassword.innerText = "Hide Password";
 
