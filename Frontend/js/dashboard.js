@@ -57,6 +57,27 @@ fetch("http://localhost:3000/profile", {
         document.querySelector("#progressBar").style.width = progress + "%";
         document.querySelector("#progressText").innerText = Math.round(progress) + "%";
         
+        // Load checkboxes from backend
+        if (data.goals) {
+            goals.forEach((goal, index) => {
+                goal.checked = data.goals[index];
+            });
+        }
+        
+        // Load chart from backend
+        if (data.weeklyProgress) {
+            weeklyProgress = data.weeklyProgress;
+            if(typeof progressChart !== 'undefined') {
+                progressChart.data.datasets[0].data = weeklyProgress;
+                progressChart.update();
+            }
+        }
+        
+        // Update the text counter without triggering a new save
+        let completed = 0;
+        goals.forEach(g => { if (g.checked) completed++; });
+        goalCounter.innerText = `${completed} / ${goals.length} Completed${completed === goals.length ? ' 🎉' : ''}`;
+        
         if (data.goal) {
             document.querySelector("#userGoal").innerText = "🎯 Goal: " + data.goal;
             localStorage.setItem("goal", data.goal);
@@ -89,8 +110,11 @@ document.querySelector("#greeting").innerText = greeting + ", " + formattedName 
 const goalCounter = document.querySelector("#goalCounter");
 function updateGoalCounter() {
     let completed = 0;
+    let currentGoals = []; // Array to send to backend
+
     goals.forEach((goal) => {
         if (goal.checked) completed++;
+        currentGoals.push(goal.checked);
     });
 
     if (completed === goals.length) {
@@ -98,15 +122,26 @@ function updateGoalCounter() {
     } else {
         goalCounter.innerText = `${completed} / ${goals.length} Completed`;
     }
+
     const today = new Date().getDay();
     const index = today === 0 ? 6 : today - 1;
     weeklyProgress[index] = completed;
-    localStorage.setItem("weeklyProgress", JSON.stringify(weeklyProgress));
     
     if(typeof progressChart !== 'undefined') {
         progressChart.data.datasets[0].data = weeklyProgress;
         progressChart.update();
     }
+
+    // Send the updated checkboxes and chart data to the backend
+    fetch("http://localhost:3000/progress", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            email: savedEmail, 
+            goals: currentGoals,
+            weeklyProgress: weeklyProgress
+        })
+    }).catch(err => console.log("Failed to sync progress:", err));
 }
 
 const editName = document.querySelector("#editName");
