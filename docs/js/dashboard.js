@@ -1,3 +1,42 @@
+// Jab dashboard load ho, tab user ka data fetch karke display karein
+window.addEventListener("DOMContentLoaded", async () => {
+    try {
+        // Option A: Agar aapne login ke waqt localStorage mein email save kiya hai
+        const userEmail = localStorage.getItem("loggedInUserEmail"); 
+
+        if (!userEmail) {
+            // Agar login nahi hai toh login page par bhej do
+            window.location.href = "login.html";
+            return;
+        }
+
+        // Backend se user ka data mangwayein
+        const response = await fetch(`https://codetrack-pyrc.onrender.com/user-profile?email=${userEmail}`);
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            const user = data.user;
+
+            // HTML elements ko dynamically update karein
+            document.querySelector("#userName").innerText = user.name;
+            document.querySelector("#userEmail").innerText = user.email;
+            document.querySelector("#userGoal").innerText = "🎯 Goal: " + user.goal;
+            
+            // Agar profile picture ka URL hai database mein
+            if (user.profilePic) {
+                document.querySelector("#profilePicImg").src = user.profilePic;
+            }
+
+            // LeetCode aur GitHub stats bhi yahan update kar sakte hain
+            document.querySelector("#solvedQuestions").innerText = user.leetcodeSolved || 0;
+            document.querySelector("#githubCommits").innerText = user.githubCommits || 0;
+            document.querySelector("#dayStreak").innerText = (user.streak || 0) + " Days";
+        }
+    } catch (error) {
+        console.error("Error loading dashboard data:", error);
+    }
+});
+
 // 1. Check if user is actually logged in
 const savedEmail = localStorage.getItem("email");
 const savedName = localStorage.getItem("name");
@@ -58,7 +97,7 @@ function renderChart() {
 // 3. Fetch Full Profile Data from MongoDB
 async function loadUserData() {
     try {
-        const response = await fetch("http://localhost:3000/profile", {
+        const response = await fetch("https://codetrack-pyrc.onrender.com/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: savedEmail })
@@ -131,7 +170,7 @@ function updateGoalCounter(syncToBackend = true) {
         renderChart();
 
         // Sync progress to MongoDB
-        fetch("http://localhost:3000/progress", {
+     fetch("https://codetrack-pyrc.onrender.com/progress", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ 
@@ -178,41 +217,31 @@ document.querySelector("#saveProfile").addEventListener("click", () => {
 
     if (!newName || !newGoal) {
         alert("Please fill out both fields!");
-        return;
+      return;
+}
+
+// Send updated data to MongoDB
+fetch("https://codetrack-pyrc.onrender.com/update-profile", { // (Agar aapke backend mein route kuch aur hai jaise /update, toh yahan wo likh dena)
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ 
+        email: savedEmail, 
+        name: newName, 
+        goal: newGoal 
+    })
+})
+.then(response => response.json())
+.then(data => {
+    if (data.success || data.message) { // Backend ke response ke hisab se condition check karein
+        alert("Profile updated successfully! 🎉");
+        // Yahan aap chahein toh page reload ya UI update karne ka code daal sakti hain
+    } else {
+        alert(data.message || "Update failed!");
     }
-
-    // Send updated data to MongoDB
-    fetch("http://localhost:3000/profile", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-            email: savedEmail, 
-            name: newName, 
-            goal: newGoal 
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Update browser memory and UI
-            localStorage.setItem("name", newName);
-            document.querySelector("#userName").innerText = newName;
-            document.querySelector("#sidebarName").innerText = newName;
-            document.querySelector("#userGoal").innerText = "🎯 Goal: " + newGoal;
-            document.querySelector("#greeting").innerText = `Welcome Back, ${newName.split(" ")[0]}! 🚀`;
-            
-            // Close the Bootstrap Modal
-            const modalElement = document.querySelector("#editProfileModal");
-            const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-            modalInstance.hide();
-
-            // Show the success toast notification
-            const toastElement = document.querySelector("#successToast");
-            const toastInstance = new bootstrap.Toast(toastElement);
-            toastInstance.show();
-        }
-    })
-    .catch(err => console.log("Failed to update profile:", err));
+})
+.catch(error => {
+    console.error("Error:", error);
+    alert("Server error. Please try again!");
 });
 
 // Pre-fill the modal inputs when it opens
@@ -254,7 +283,7 @@ fetchLeetCodeStats("Bhavya_2_7_");
 // 9. Live GitHub Stats Integration
 async function fetchGitHubStats(githubUsername) {
     try {
-        const response = await fetch(`http://localhost:3000/api/github/${githubUsername}`);
+        const response = await fetch(`https://codetrack-pyrc.onrender.com/api/github/${githubUsername}`);
         const data = await response.json();
 
         if (data.success) {

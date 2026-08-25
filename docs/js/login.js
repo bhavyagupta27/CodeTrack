@@ -62,7 +62,7 @@ loginForm.addEventListener("submit", (event) => {
     const payload = isLoginMode ? { email, password } : { name, email, password };
 
     // API Call to MongoDB Backend
-    fetch("http://localhost:3000" + endpoint, {
+    fetch("https://codetrack-pyrc.onrender.com" + endpoint, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
