@@ -1,36 +1,45 @@
-// Jab dashboard load ho, tab user ka data fetch karke display karein
 window.addEventListener("DOMContentLoaded", async () => {
     try {
-        // Option A: Agar aapne login ke waqt localStorage mein email save kiya hai
-        const userEmail = localStorage.getItem("loggedInUserEmail"); 
+        const userEmail = localStorage.getItem("loggedInUserEmail");  
 
         if (!userEmail) {
-            // Agar login nahi hai toh login page par bhej do
             window.location.href = "login.html";
             return;
         }
 
-        // Backend se user ka data mangwayein
         const response = await fetch(`https://codetrack-pyrc.onrender.com/user-profile?email=${userEmail}`);
         const data = await response.json();
 
         if (response.ok && data.success) {
             const user = data.user;
 
-            // HTML elements ko dynamically update karein
+            // 1. Dynamic Greeting & Name Update
             document.querySelector("#userName").innerText = user.name;
+            document.querySelector("#greeting").innerText = `Welcome Back, ${user.name}! 🚀`;
             document.querySelector("#userEmail").innerText = user.email;
-            document.querySelector("#userGoal").innerText = "🎯 Goal: " + user.goal;
             
-            // Agar profile picture ka URL hai database mein
-            if (user.profilePic) {
-                document.querySelector("#profilePicImg").src = user.profilePic;
+            // Sidebar details update
+            if(document.querySelector("#sidebarName")) document.querySelector("#sidebarName").innerText = user.name;
+            if(document.querySelector("#sidebarEmail")) document.querySelector("#sidebarEmail").innerText = user.email;
+
+            // 2. Goal Update
+            if (user.goal) {
+                document.querySelector("#userGoal").innerText = "🎯 Goal: " + user.goal;
+            }
+            
+            // 3. Profile Picture (Agar database mein hai toh wo dikhegi, nahi toh ek default avatar / initials)
+            const avatarImg = document.querySelector("#profileAvatar");
+            if (user.profilePic && user.profilePic.trim() !== "") {
+                avatarImg.src = user.profilePic;
+            } else {
+                // Agar pfp nahi hai toh placeholder avatar (jaise DiceBear ya initials)
+                avatarImg.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.name)}`;
             }
 
-            // LeetCode aur GitHub stats bhi yahan update kar sakte hain
-            document.querySelector("#solvedQuestions").innerText = user.leetcodeSolved || 0;
-            document.querySelector("#githubCommits").innerText = user.githubCommits || 0;
-            document.querySelector("#dayStreak").innerText = (user.streak || 0) + " Days";
+            // 4. Stats Update
+            if(document.querySelector("#questionsSolved")) document.querySelector("#questionsSolved").innerText = user.leetcodeSolved || 0;
+            if(document.querySelector("#githubCommits")) document.querySelector("#githubCommits").innerText = user.githubCommits || 0;
+            if(document.querySelector("#dayStreak")) document.querySelector("#dayStreak").innerText = (user.streak || 0);
         }
     } catch (error) {
         console.error("Error loading dashboard data:", error);
