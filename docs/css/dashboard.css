@@ -1,76 +1,63 @@
-.offcanvas{
-
-    width:280px;
-    overflow-x:hidden;
-
+.offcanvas {
+    width: 280px;
+    overflow-x: hidden;
 }
 
-.offcanvas-body{
-
-    overflow-x:hidden;
-
+.offcanvas-body {
+    overflow-x: hidden;
 }
 
-.offcanvas .nav-link{
-
-    font-size:18px;
-    padding:10px 0;
-    transition:0.3s;
-
+.offcanvas .nav-link {
+    font-size: 18px;
+    padding: 10px 0;
+    transition: 0.3s;
 }
 
-.offcanvas .nav-link:hover{
-
-    color:#8b5cf6 !important;
-    transform:translateX(8px);
-
+.offcanvas .nav-link:hover {
+    color: #8b5cf6 !important;
+    transform: translateX(8px);
 }
 
-#sidebarName{
-
-    margin-top:10px;
-    font-size:20px;
-
+#sidebarName {
+    margin-top: 10px;
+    font-size: 20px;
 }
 
-#sidebarEmail{
-
-    font-size:15px;
-
+#sidebarEmail {
+    font-size: 15px;
 }
+
 #logoutBtn,
 #sidebarName,
-#sidebarEmail{
-    margin-left:7px;
+#sidebarEmail {
+    margin-left: 7px;
 }
+
 .dashboard-card,
-.stats-card{
-
-    transition:transform .3s ease,
-               box-shadow .3s ease;
-
+.stats-card {
+    transition: transform .3s ease, box-shadow .3s ease;
 }
-.dashboard-card canvas{
-    max-height:220px;
+
+.dashboard-card canvas {
+    max-height: 220px;
 }
+
 .dashboard-card:hover,
-.stats-card:hover{
-
-    transform:translateY(-8px);
-
-    box-shadow:0 12px 30px rgba(139,92,246,.35);
-
-}  
-@media(max-width:768px){
-
-    .offcanvas{
-        width:240px;
-    }
-
+.stats-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(139, 92, 246, .35);
 }
-#profileAvatar{
+
+@media(max-width: 768px) {
+    .offcanvas {
+        width: 240px;
+    }
+}
+
+#profileAvatar {
     background-color: black;
 }
+
 body.light-mode {
     background: #f8f9fa;
     color: #212529;
@@ -94,31 +81,15 @@ body.light-mode .offcanvas {
     background: white !important;
     color: #212529 !important;
 }
-.dashboard-card{
-    padding:30px;
-}
-#progressChart{
-    max-height:280px !important;
-}
-.dashboard-card p{
-    margin-bottom:12px;
-}
-#themeToggle {
-    background: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
+
+.dashboard-card {
+    padding: 30px;
 }
 
-#themeToggle:hover {
-    background: rgba(255, 255, 255, 0.1) !important;
+#progressChart {
+    max-height: 280px !important;
 }
 
-/* Light mode ke liye theme toggle button fix */
-body.light-mode #themeToggle {
-    border: 1px solid rgba(33, 37, 41, 0.2);
-    color: #212529;
-}
-
-body.light-mode #themeToggle:hover {
-    background: rgba(33, 37, 41, 0.05) !important;
+.dashboard-card p {
+    margin-bottom: 12px;
 }
