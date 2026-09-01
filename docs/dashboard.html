@@ -9,7 +9,6 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
-
 </head>
 
 <body>
@@ -28,9 +27,7 @@
                 </button>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
-
                     <span class="navbar-toggler-icon"></span>
-
                 </button>
 
             </div>
@@ -43,15 +40,12 @@
         <div class="offcanvas-header">
 
             <div class="d-flex align-items-center">
-
                 <h4 class="offcanvas-title mb-0">
                     CodeTrack 🚀
                 </h4>
-
                 <small class="text-secondary ms-2">
                     Placement Dashboard
                 </small>
-
             </div>
 
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas">
@@ -80,20 +74,14 @@
             <p id="sidebarEmail" class="small text-secondary"></p>
 
             <div class="mt-auto text-start">
-
                 <button class="btn btn-danger px-4" id="logoutBtn">
-
                     🚪 Logout
-
                 </button>
-
             </div>
 
         </div>
 
     </div>
-
-
 
     <section class="dashboard py-5" id="dashboard">
 
@@ -108,14 +96,11 @@
             <div class="row g-4">
 
                 <!-- Profile -->
-                <div class="col-lg-4  d-flex">
-
-
+                <div class="col-lg-4 d-flex">
 
                     <div class="dashboard-card w-100">
 
                         <div class="text-center mb-4">
-
                             <img id="profileAvatar" src="" class="rounded-circle img-fluid" width="120" height="120">
                         </div>
 
@@ -130,7 +115,6 @@
                         <p class="text-center">Computer Science Student</p>
 
                         <p class="text-center" id="userEmail">
-
                         </p>
 
                         <p class="text-center" id="userGoal">
@@ -140,9 +124,7 @@
                         <div class="text-center mt-3">
                             <button id="editProfileBtn" class="btn btn-outline-primary" data-bs-toggle="modal"
                                 data-bs-target="#editProfileModal">
-
                                 ✏️ Edit Profile
-
                             </button>
                         </div>
 
@@ -161,8 +143,6 @@
                                 Active Learner
                             </span>
                         </p>
-
-
 
                         <h4>🎯 Current Focus</h4>
 
@@ -203,8 +183,6 @@
                                 <b>Product Based Company</b>
                             </p>
 
-
-
                         </div>
                     </div>
 
@@ -239,46 +217,30 @@
 
                     </div>
 
-                  <!-- Today's Goals Card -->
-<div class="dashboard-card mt-4">
-    <h4 class="mb-4">Today's Goals</h4>
+                    <!-- Today's Goals Card -->
+                    <div class="dashboard-card mt-4">
 
-    <p id="goalCounter" class="text-success fw-bold">
-        0 / 4 Completed
-    </p>
+                        <h4 class="mb-4">Today's Goals</h4>
 
-    <hr>
+                        <p id="goalCounter" class="text-success fw-bold">
+                            0 / 4 Completed
+                        </p>
 
-    <!-- Naya Input Section Custom Goals ke liye -->
-    <div class="input-group mb-3">
-        <input type="text" id="newGoalInput" class="form-control" placeholder="Add a new custom goal...">
-        <button class="btn btn-primary" id="addGoalBtn" type="button">Add Goal</button>
-    </div>
+                        <hr>
 
-    <!-- Dynamic Goals Container jahan naye goals aakar judenge -->
-    <div id="goalsContainer">
-        <div class="form-check mb-2">
-            <input class="form-check-input goal-checkbox" type="checkbox" id="goal1">
-            <label class="form-check-label" for="goal1">DSA Practice</label>
-        </div>
-        <div class="form-check mb-2">
-            <input class="form-check-input goal-checkbox" type="checkbox" id="goal2">
-            <label class="form-check-label" for="goal2">Backend Learning</label>
-        </div>
-        <div class="form-check mb-2">
-            <input class="form-check-input goal-checkbox" type="checkbox" id="goal3">
-            <label class="form-check-label" for="goal3">GSSoC</label>
-        </div>
-        <div class="form-check mb-3">
-            <input class="form-check-input goal-checkbox" type="checkbox" id="goal4">
-            <label class="form-check-label" for="goal4">Project Development</label>
-        </div>
-    </div>
+                        <div class="input-group mb-3">
+                            <input type="text" id="newGoalInput" class="form-control" placeholder="Add a new custom goal...">
+                            <button class="btn btn-primary" id="addGoalBtn" type="button">Add Goal</button>
+                        </div>
 
-    <button class="btn btn-danger mt-2" id="resetProgress">
-        Reset Progress
-    </button>
-</div>
+                        <div id="goalsContainer"></div>
+
+                        <button class="btn btn-danger mt-2" id="resetProgress">
+                            Reset Progress
+                        </button>
+
+                    </div>
+
                     <!-- Weekly Progress Card -->
                     <div class="dashboard-card mt-4">
 
@@ -293,75 +255,51 @@
                 </div>
 
                 <div class="modal fade" id="editProfileModal" tabindex="-1">
-
                     <div class="modal-dialog">
-
                         <div class="modal-content">
 
                             <div class="modal-header">
-
                                 <h5 class="modal-title">
                                     Edit Profile
                                 </h5>
-
                                 <button class="btn-close" data-bs-dismiss="modal">
                                 </button>
-
                             </div>
 
                             <div class="modal-body">
-
                                 <label>Name</label>
-
                                 <input type="text" class="form-control mb-3" id="editName">
 
                                 <label>Goal</label>
-
                                 <input type="text" class="form-control" id="editGoal">
-
                             </div>
 
                             <div class="modal-footer">
-
                                 <button class="btn btn-primary" id="saveProfile">
-
                                     Save Changes
-
                                 </button>
-
                             </div>
 
                         </div>
-
                     </div>
-
                 </div>
 
     </section>
 
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-
         <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
-
             <div class="d-flex">
-
                 <div class="toast-body">
                     ✅ Profile Updated Successfully
                 </div>
-
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
                 </button>
-
             </div>
-
         </div>
-
     </div>
 
     <footer class="footer py-4" id="footer">
-
         <div class="container">
-
             <div class="row">
 
                 <div class="col-md-6">
@@ -376,25 +314,19 @@
                 </p>
 
                 <div class="col-md-6 text-md-end">
-
                     <a href="index.html#features" class="footer-link">
                         Features
                     </a>
-
                     <a href="#dashboard" class="footer-link">
                         Dashboard
                     </a>
-
                     <a href="#" class="footer-link" id="footerLogout">
                         Logout
                     </a>
-
                 </div>
 
             </div>
-
         </div>
-
     </footer>
 
     <!-- Chart.js sabse pehle load ho -->
