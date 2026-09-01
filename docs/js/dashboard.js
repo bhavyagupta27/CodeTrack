@@ -287,6 +287,95 @@ function updateGoalCounter(syncToBackend = true) {
         }).catch(err => console.log("Failed to sync progress:", err));
     }
 }
+
+// Custom & Default Goals Management
+let customGoalsList = [
+    { text: "DSA Practice", completed: false },
+    { text: "Backend Learning", completed: false },
+    { text: "GSSoC", completed: false },
+    { text: "Project Development", completed: false }
+];
+
+const goalsContainer = document.querySelector("#goalsContainer");
+const newGoalInput = document.querySelector("#newGoalInput");
+const addGoalBtn = document.querySelector("#addGoalBtn");
+const goalCounter = document.querySelector("#goalCounter");
+
+function renderGoalsUI() {
+    if (!goalsContainer) return;
+    goalsContainer.innerHTML = "";
+    
+    customGoalsList.forEach((goal, index) => {
+        const goalDiv = document.createElement("div");
+        goalDiv.className = "form-check mb-2";
+        goalDiv.innerHTML = `
+            <input class="form-check-input goal-checkbox" type="checkbox" id="customGoal_${index}" ${goal.completed ? 'checked' : ''}>
+            <label class="form-check-label text-white" for="customGoal_${index}">${goal.text}</label>
+        `;
+        goalsContainer.appendChild(goalDiv);
+    });
+
+    // Re-attach event listeners
+    document.querySelectorAll(".goal-checkbox").forEach((box, index) => {
+        box.addEventListener("change", (e) => {
+            customGoalsList[index].completed = e.target.checked;
+            updateGoalCounter(true);
+        });
+    });
+}
+
+function updateGoalCounter(syncToBackend = true) {
+    let completed = 0;
+    let currentGoalsStatus = [];
+
+    customGoalsList.forEach((goal) => {
+        if (goal.completed) completed++;
+        currentGoalsStatus.push(goal.completed);
+    });
+
+    const totalGoals = customGoalsList.length;
+    if (goalCounter) {
+        goalCounter.innerText = `${completed} / ${totalGoals} Completed${completed === totalGoals && totalGoals > 0 ? ' 🎉' : ''}`;
+    }
+
+    if (syncToBackend) {
+        let today = new Date().getDay();
+        let index = today === 0 ? 6 : today - 1; 
+        if (typeof weeklyProgressData !== 'undefined') {
+            weeklyProgressData[index] = completed;
+            renderChart();
+        }
+
+        fetch("https://codetrack-pyrc.onrender.com/progress", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+                email: userEmail, 
+                goals: currentGoalsStatus,
+                weeklyProgress: weeklyProgressData
+            })
+        }).catch(err => console.log("Failed to sync progress:", err));
+    }
+}
+
+if (addGoalBtn) {
+    addGoalBtn.addEventListener("click", () => {
+        const goalText = newGoalInput.value.trim();
+        if (!goalText) {
+            alert("Please enter a goal!");
+            return;
+        }
+
+        customGoalsList.push({ text: goalText, completed: false });
+        newGoalInput.value = "";
+        renderGoalsUI();
+        updateGoalCounter(true);
+    });
+}
+
+// Initial render call
+renderGoalsUI();
+
     loadUserData();
 });
 
