@@ -239,51 +239,46 @@
 
                     </div>
 
-                    <!-- Today's Goals Card -->
-                    <div class="dashboard-card mt-4">
+                  <!-- Today's Goals Card -->
+<div class="dashboard-card mt-4">
+    <h4 class="mb-4">Today's Goals</h4>
 
-                        <h4 class="mb-4">Today's Goals</h4>
+    <p id="goalCounter" class="text-success fw-bold">
+        0 / 4 Completed
+    </p>
 
-                        <p id="goalCounter" class="text-success fw-bold">
-                            0 / 4 Completed
-                        </p>
+    <hr>
 
-                        <hr>
+    <!-- Naya Input Section Custom Goals ke liye -->
+    <div class="input-group mb-3">
+        <input type="text" id="newGoalInput" class="form-control" placeholder="Add a new custom goal...">
+        <button class="btn btn-primary" id="addGoalBtn" type="button">Add Goal</button>
+    </div>
 
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="goal1">
-                            <label class="form-check-label" for="goal1">
-                                DSA Practice
-                            </label>
-                        </div>
+    <!-- Dynamic Goals Container jahan naye goals aakar judenge -->
+    <div id="goalsContainer">
+        <div class="form-check mb-2">
+            <input class="form-check-input goal-checkbox" type="checkbox" id="goal1">
+            <label class="form-check-label" for="goal1">DSA Practice</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input goal-checkbox" type="checkbox" id="goal2">
+            <label class="form-check-label" for="goal2">Backend Learning</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input goal-checkbox" type="checkbox" id="goal3">
+            <label class="form-check-label" for="goal3">GSSoC</label>
+        </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input goal-checkbox" type="checkbox" id="goal4">
+            <label class="form-check-label" for="goal4">Project Development</label>
+        </div>
+    </div>
 
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="goal2">
-                            <label class="form-check-label" for="goal2">
-                                Backend Learning
-                            </label>
-                        </div>
-
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="goal3">
-                            <label class="form-check-label" for="goal3">
-                                GSSoC
-                            </label>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="goal4">
-                            <label class="form-check-label" for="goal4">
-                                Project Development
-                            </label>
-                        </div>
-
-                        <button class="btn btn-danger" id="resetProgress">
-                            Reset Progress
-                        </button>
-
-                    </div>
-
+    <button class="btn btn-danger mt-2" id="resetProgress">
+        Reset Progress
+    </button>
+</div>
                     <!-- Weekly Progress Card -->
                     <div class="dashboard-card mt-4">
 
