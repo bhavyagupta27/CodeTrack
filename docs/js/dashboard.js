@@ -17,6 +17,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     let progressChart;
     let weeklyProgressData = [0, 0, 0, 0, 0, 0, 0];
 
+    // Theme Toggle Functionality
+    const themeToggleBtn = document.querySelector("#themeToggle");
+    if (themeToggleBtn) {
+        if (localStorage.getItem("theme") === "light") {
+            document.body.classList.add("light-mode");
+            themeToggleBtn.innerText = "☀️";
+        } else {
+            themeToggleBtn.innerText = "🌙";
+        }
+
+        themeToggleBtn.addEventListener("click", () => {
+            document.body.classList.toggle("light-mode");
+            const isLight = document.body.classList.contains("light-mode");
+            themeToggleBtn.innerText = isLight ? "☀️" : "🌙";
+            localStorage.setItem("theme", isLight ? "light" : "dark");
+        });
+    }
+
     // Unified Goals List & DOM Elements
     let customGoalsList = [
         { text: "DSA Practice", completed: false },
@@ -78,12 +96,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             goalDiv.className = "form-check mb-2";
             goalDiv.innerHTML = `
                 <input class="form-check-input goal-checkbox" type="checkbox" id="customGoal_${index}" ${goal.completed ? 'checked' : ''}>
-                <label class="form-check-label text-white" for="customGoal_${index}">${goal.text}</label>
+                <label class="form-check-label" for="customGoal_${index}">${goal.text}</label>
             `;
             goalsContainer.appendChild(goalDiv);
         });
 
-        // Re-attach event listeners to all dynamic checkboxes
         document.querySelectorAll(".goal-checkbox").forEach((box, index) => {
             box.addEventListener("change", (e) => {
                 customGoalsList[index].completed = e.target.checked;
@@ -148,7 +165,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Initial UI and Chart render
     renderGoalsUI();
     renderChart();
 
