@@ -196,9 +196,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const avatarImg = document.querySelector("#profileAvatar");
-    if (avatarImg) {
-        avatarImg.src = `https://github.com/bhavyagupta27.png`;
-    }
+if (avatarImg) {
+    const githubUser = userData.githubUsername || "bhavyagupta27"; // Fallback
+    avatarImg.src = `https://github.com/${githubUser}.png`;
+}
 
     loadUserData();
 });
