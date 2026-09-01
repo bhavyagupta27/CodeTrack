@@ -370,3 +370,24 @@ body {
     border-color: #8b5cf6;
     box-shadow: 0 0 10px rgba(139, 92, 246, .3);
 }
+#themeToggle.btn {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 6px 10px;
+}
+
+#themeToggle.btn:hover, 
+#themeToggle.btn:focus {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+body.light-mode #themeToggle.btn {
+    color: #212529 !important;
+}
+
+body.light-mode #themeToggle.btn:hover {
+    background: rgba(33, 37, 41, 0.05) !important;
+}
