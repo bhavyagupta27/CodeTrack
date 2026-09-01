@@ -200,6 +200,93 @@ if (avatarImg) {
     const githubUser = userData.githubUsername || "bhavyagupta27"; // Fallback
     avatarImg.src = `https://github.com/${githubUser}.png`;
 }
+// Custom Goal Addition Logic
+const addGoalBtn = document.querySelector("#addGoalBtn");
+const newGoalInput = document.querySelector("#newGoalInput");
+const goalsContainer = document.querySelector("#goalsContainer");
 
+// Array to hold current goals list (texts and status)
+let customGoalsList = [
+    { text: "DSA Practice", completed: false },
+    { text: "Backend Learning", completed: false },
+    { text: "GSSoC", completed: false },
+    { text: "Project Development", completed: false }
+];
+
+// Function to render goals dynamically on UI
+function renderGoalsUI() {
+    goalsContainer.innerHTML = "";
+    customGoalsList.forEach((goal, index) => {
+        const goalDiv = document.createElement("div");
+        goalDiv.className = "form-check mb-2";
+        goalDiv.innerHTML = `
+            <input class="form-check-input goal-checkbox" type="checkbox" id="customGoal_${index}" ${goal.completed ? 'checked' : ''}>
+            <label class="form-check-label" for="customGoal_${index}">${goal.text}</label>
+        `;
+        goalsContainer.appendChild(goalDiv);
+    });
+
+    // Re-attach event listeners to new checkboxes
+    document.querySelectorAll(".goal-checkbox").forEach((box, index) => {
+        box.addEventListener("change", (e) => {
+            customGoalsList[index].completed = e.target.checked;
+            updateGoalCounter(true);
+        });
+    });
+}
+
+// Add Goal Button Event
+if (addGoalBtn) {
+    addGoalBtn.addEventListener("click", () => {
+        const goalText = newGoalInput.value.trim();
+        if (!goalText) {
+            alert("Please enter a goal!");
+            return;
+        }
+
+        customGoalsList.push({ text: goalText, completed: false });
+        newGoalInput.value = ""; // Clear input
+        renderGoalsUI();
+        updateGoalCounter(true); // Sync with backend
+    });
+}
+
+// Updated Goal Counter function to handle dynamic list length
+function updateGoalCounter(syncToBackend = true) {
+    let completed = 0;
+    let currentGoalsStatus = [];
+    let currentGoalsText = [];
+
+    customGoalsList.forEach((goal) => {
+        if (goal.completed) completed++;
+        currentGoalsStatus.push(goal.completed);
+        currentGoalsText.push(goal.text);
+    });
+
+    const totalGoals = customGoalsList.length;
+    if (goalCounter) {
+        goalCounter.innerText = `${completed} / ${totalGoals} Completed${completed === totalGoals && totalGoals > 0 ? ' 🎉' : ''}`;
+    }
+
+    if (syncToBackend) {
+        let today = new Date().getDay();
+        let index = today === 0 ? 6 : today - 1; 
+        weeklyProgressData[index] = completed;
+        renderChart();
+
+        // Send to backend (Make sure your backend schema supports custom goals array if needed)
+        fetch("https://codetrack-pyrc.onrender.com/progress", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+                email: userEmail, 
+                goals: currentGoalsStatus,
+                goalsText: currentGoalsText, // Optional: backend mein save karne ke liye
+                weeklyProgress: weeklyProgressData
+            })
+        }).catch(err => console.log("Failed to sync progress:", err));
+    }
+}
     loadUserData();
 });
+
