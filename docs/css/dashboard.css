@@ -69,6 +69,11 @@ body.light-mode .stats-card {
     color: #212529;
 }
 
+body.light-mode .dashboard-card label,
+body.light-mode .dashboard-card .form-check-label {
+    color: #212529 !important;
+}
+
 body.light-mode .navbar {
     background: white !important;
 }
@@ -79,6 +84,14 @@ body.light-mode .navbar-brand {
 
 body.light-mode .offcanvas {
     background: white !important;
+    color: #212529 !important;
+}
+
+body.light-mode .offcanvas .nav-link {
+    color: #212529 !important;
+}
+
+body.light-mode .offcanvas-title {
     color: #212529 !important;
 }
 
