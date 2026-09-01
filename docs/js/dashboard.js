@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
     const userEmail = localStorage.getItem("loggedInUserEmail") || localStorage.getItem("email");
     const userName = localStorage.getItem("name") || "Bhavya Gupta";
 
@@ -14,16 +14,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (document.querySelector("#sidebarEmail")) document.querySelector("#sidebarEmail").innerText = userEmail;
     if (document.querySelector("#greeting")) document.querySelector("#greeting").innerText = `Welcome Back, ${firstName}! 🚀`;
 
-    let progressChart;
-    let weeklyProgressData = [0, 0, 0, 0, 0, 0, 0];
-
-    // Theme Toggle Functionality
+    // --- 1. THEME TOGGLE FIX ---
     const themeToggleBtn = document.querySelector("#themeToggle");
     if (themeToggleBtn) {
-        if (localStorage.getItem("theme") === "light") {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "light") {
             document.body.classList.add("light-mode");
             themeToggleBtn.innerText = "☀️";
         } else {
+            document.body.classList.remove("light-mode");
             themeToggleBtn.innerText = "🌙";
         }
 
@@ -35,7 +34,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Unified Goals List & DOM Elements
+    let progressChart;
+    let weeklyProgressData = [0, 0, 0, 0, 0, 0, 0];
+
+    // --- 2. GOALS MANAGEMENT ---
     let customGoalsList = [
         { text: "DSA Practice", completed: false },
         { text: "Backend Learning", completed: false },
@@ -52,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const canvasElement = document.getElementById("progressChart");
         if (!canvasElement) return;
         const ctx = canvasElement.getContext("2d");
-        
+
         if (progressChart) {
             progressChart.data.datasets[0].data = weeklyProgressData;
             progressChart.update();
@@ -76,12 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: { 
-                        y: { 
-                            beginAtZero: true, 
-                            max: 10 
-                        } 
-                    }
+                    scales: { y: { beginAtZero: true, max: 10 } }
                 }
             });
         }
@@ -90,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function renderGoalsUI() {
         if (!goalsContainer) return;
         goalsContainer.innerHTML = "";
-        
+
         customGoalsList.forEach((goal, index) => {
             const goalDiv = document.createElement("div");
             goalDiv.className = "form-check mb-2";
@@ -125,15 +122,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (syncToBackend) {
             let today = new Date().getDay();
-            let index = today === 0 ? 6 : today - 1; 
+            let index = today === 0 ? 6 : today - 1;
             weeklyProgressData[index] = completed;
             renderChart();
 
             fetch("https://codetrack-pyrc.onrender.com/progress", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ 
-                    email: userEmail, 
+                body: JSON.stringify({
+                    email: userEmail,
                     goals: currentGoalsStatus,
                     weeklyProgress: weeklyProgressData
                 })
@@ -168,6 +165,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderGoalsUI();
     renderChart();
 
+    // --- 3. LOAD USER DATA ---
     async function loadUserData() {
         try {
             const response = await fetch(`https://codetrack-pyrc.onrender.com/user-profile?email=${userEmail}`);
@@ -177,17 +175,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const userData = data.user;
                 const solved = userData.leetcodeSolved || userData.questionsSolved || 0;
                 const target = userData.target || 300;
-                
-                document.querySelector("#questionsSolved").innerText = solved;
-                document.querySelector("#githubCommits").innerText = userData.githubCommits || 0;
-                document.querySelector("#dayStreak").innerText = (userData.streak || userData.dayStreak || 0) + " Days";
-                document.querySelector("#userGoal").innerText = "🎯 Goal: " + (userData.goal || "Crack Product-Based Company");
+
+                if (document.querySelector("#questionsSolved")) document.querySelector("#questionsSolved").innerText = solved;
+                if (document.querySelector("#githubCommits")) document.querySelector("#githubCommits").innerText = userData.githubCommits || 0;
+                if (document.querySelector("#dayStreak")) document.querySelector("#dayStreak").innerText = (userData.streak || userData.dayStreak || 0) + " Days";
+                if (document.querySelector("#userGoal")) document.querySelector("#userGoal").innerText = "🎯 Goal: " + (userData.goal || "Crack Product-Based Company");
 
                 const progressPercent = Math.min((solved / target) * 100, 100).toFixed(0);
-                document.querySelector("#progressBar").style.width = progressPercent + "%";
-                document.querySelector("#progressText").innerText = progressPercent + "%";
+                if (document.querySelector("#progressBar")) document.querySelector("#progressBar").style.width = progressPercent + "%";
+                if (document.querySelector("#progressText")) document.querySelector("#progressText").innerText = progressPercent + "%";
 
-                if (userData.goals && Array.isArray(userData.goals) && userData.goals.length === customGoalsList.length) {
+                if (userData.goals && Array.isArray(userData.goals)) {
                     userData.goals.forEach((status, idx) => {
                         if (customGoalsList[idx]) customGoalsList[idx].completed = status;
                     });
@@ -197,7 +195,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (userData.weeklyProgress && userData.weeklyProgress.length === 7) {
                     weeklyProgressData = userData.weeklyProgress;
                 }
-                
+
                 renderChart();
                 updateGoalCounter(false);
             }
@@ -209,6 +207,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     loadUserData();
 
+    // --- 4. LOGOUT & PROFILE EDIT ---
     const handleLogout = () => {
         localStorage.clear();
         window.location.href = "login.html";
@@ -224,8 +223,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const editProfileBtn = document.querySelector("#editProfileBtn");
     if (editProfileBtn) {
         editProfileBtn.addEventListener("click", () => {
-            document.querySelector("#editName").value = document.querySelector("#userName").innerText;
-            document.querySelector("#editGoal").value = document.querySelector("#userGoal").innerText.replace("🎯 Goal: ", "");
+            if (document.querySelector("#editName")) document.querySelector("#editName").value = document.querySelector("#userName").innerText;
+            if (document.querySelector("#editGoal")) document.querySelector("#editGoal").value = document.querySelector("#userGoal").innerText.replace("🎯 Goal: ", "");
         });
     }
 
@@ -245,21 +244,22 @@ document.addEventListener("DOMContentLoaded", async () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: userEmail, name: newName, goal: newGoal })
             })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Profile updated successfully! 🎉");
-                    location.reload();
-                } else {
-                    alert(data.message || "Update failed!");
-                }
-            })
-            .catch(err => console.error("Error:", err));
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Profile updated successfully! 🎉");
+                        location.reload();
+                    } else {
+                        alert(data.message || "Update failed!");
+                    }
+                })
+                .catch(err => console.error("Error:", err));
         });
     }
 
     const avatarImg = document.querySelector("#profileAvatar");
-    if (avatarImg) {
-        avatarImg.src = `https://github.com/bhavyagupta27.png`;
-    }
+if (avatarImg) {
+    const initialsName = encodeURIComponent(userName || "User");
+    avatarImg.src = `https://ui-avatars.com/api/?name=${initialsName}&background=8b5cf6&color=fff&bold=true`;
+}
 });
