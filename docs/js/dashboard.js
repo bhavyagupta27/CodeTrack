@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    // 1. Authentication Check (Supports both keys used in your project)
     const userEmail = localStorage.getItem("loggedInUserEmail") || localStorage.getItem("email");
     const userName = localStorage.getItem("name") || "Bhavya Gupta";
 
@@ -8,7 +7,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    // 2. Initial UI setup from LocalStorage if available
     const firstName = userName.split(" ")[0];
     if (document.querySelector("#userName")) document.querySelector("#userName").innerText = userName;
     if (document.querySelector("#userEmail")) document.querySelector("#userEmail").innerText = userEmail;
@@ -16,11 +14,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (document.querySelector("#sidebarEmail")) document.querySelector("#sidebarEmail").innerText = userEmail;
     if (document.querySelector("#greeting")) document.querySelector("#greeting").innerText = `Welcome Back, ${firstName}! 🚀`;
 
-    // Initialize Chart Variables
     let progressChart;
     let weeklyProgressData = [0, 0, 0, 0, 0, 0, 0];
 
-    // Function to render Chart.js
     function renderChart() {
         const canvasElement = document.getElementById("progressChart");
         if (!canvasElement) return;
@@ -60,7 +56,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // 3. Fetch Full Profile & Progress Data from MongoDB Backend
     async function loadUserData() {
         try {
             const response = await fetch(`https://codetrack-pyrc.onrender.com/user-profile?email=${userEmail}`);
@@ -76,12 +71,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.querySelector("#dayStreak").innerText = (userData.streak || userData.dayStreak || 0) + " Days";
                 document.querySelector("#userGoal").innerText = "🎯 Goal: " + (userData.goal || "Crack Product-Based Company");
 
-                // Placement Readiness Progress Bar
                 const progressPercent = Math.min((solved / target) * 100, 100).toFixed(0);
                 document.querySelector("#progressBar").style.width = progressPercent + "%";
                 document.querySelector("#progressText").innerText = progressPercent + "%";
 
-                // Checkboxes setup
                 if (userData.goals && userData.goals.length === 4) {
                     document.querySelector("#goal1").checked = userData.goals[0];
                     document.querySelector("#goal2").checked = userData.goals[1];
@@ -89,7 +82,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     document.querySelector("#goal4").checked = userData.goals[3];
                 }
 
-                // Weekly Chart Data
                 if (userData.weeklyProgress && userData.weeklyProgress.length === 7) {
                     weeklyProgressData = userData.weeklyProgress;
                 }
@@ -99,11 +91,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         } catch (error) {
             console.error("Failed to load user data:", error);
-            renderChart(); // Render empty chart as fallback so it doesn't stay blank
+            renderChart();
         }
     }
 
-    // 4. Checkbox Logic & Syncing
     const checkboxes = [
         document.querySelector("#goal1"),
         document.querySelector("#goal2"),
@@ -147,7 +138,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (box) box.addEventListener("change", () => updateGoalCounter(true));
     });
 
-    // 5. Reset Goals Button
     const resetBtn = document.querySelector("#resetProgress");
     if (resetBtn) {
         resetBtn.addEventListener("click", () => {
@@ -156,7 +146,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 6. Logout Logic
     const handleLogout = () => {
         localStorage.clear();
         window.location.href = "login.html";
@@ -169,7 +158,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 7. Edit Profile Modal Logic
     const editProfileBtn = document.querySelector("#editProfileBtn");
     if (editProfileBtn) {
         editProfileBtn.addEventListener("click", () => {
@@ -207,12 +195,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 8. Profile Avatar Loader (GitHub integration fallback)
     const avatarImg = document.querySelector("#profileAvatar");
     if (avatarImg) {
         avatarImg.src = `https://github.com/bhavyagupta27.png`;
     }
 
-    // Run Initial Data Fetch
     loadUserData();
 });
