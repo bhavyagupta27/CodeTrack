@@ -1,4 +1,4 @@
-const API_BASE = window.CODETRACK_API_URL || "http://localhost:3000";
+const API_BASE = (typeof window.CODETRACK_API_URL !== "undefined") ? window.CODETRACK_API_URL : "http://localhost:3000";
 const savedEmail=localStorage.getItem("email");
 if(!savedEmail){window.location.href="login.html";}
 
