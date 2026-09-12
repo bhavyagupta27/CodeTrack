@@ -1,0 +1,1 @@
+const savedName=localStorage.getItem("name");const welcome=document.querySelector("#welcomeUser");if(savedName&&welcome)welcome.innerText=`Welcome, ${savedName}! 👋`;

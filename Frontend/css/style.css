@@ -1,0 +1,21 @@
+body{background:#0f1020;color:#f8f9fa;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+.navbar{background:#15162b!important;border-bottom:1px solid rgba(255,255,255,.08)}
+.hero{padding:110px 0;background:radial-gradient(circle at top,#30206b 0,#111225 55%,#0f1020 100%)}
+.features,.stats,.testimonials{background:#0f1020}
+.feature-card,.testimonial-card,.stats-card,.dashboard-card,.auth-card{background:#181a31;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.feature-card,.testimonial-card,.stats-card{height:100%}
+.cta-box{background:#181a31;border:1px solid rgba(139,92,246,.35);border-radius:20px;padding:50px}
+.btn-primary{background:#8b5cf6;border-color:#8b5cf6}
+.btn-primary:hover{background:#7446dc;border-color:#7446dc}
+.form-control{background:#111225;border-color:#3a3d5c;color:#fff}
+.form-control:focus{background:#111225;color:#fff;border-color:#8b5cf6;box-shadow:0 0 0 .2rem rgba(139,92,246,.2)}
+.auth-section{min-height:calc(100vh - 70px);display:flex;align-items:center}
+.auth-card{max-width:480px;width:100%}
+.footer{background:#15162b;border-top:1px solid rgba(255,255,255,.08)}
+.footer-link{color:#aaa;text-decoration:none;margin-left:18px}
+.footer-link:hover{color:#8b5cf6}
+body.light-mode{background:#f8f9fa;color:#212529}
+body.light-mode .navbar{background:#fff!important}
+body.light-mode .navbar-brand{color:#212529!important}
+body.light-mode .feature-card,body.light-mode .testimonial-card,body.light-mode .stats-card,body.light-mode .dashboard-card,body.light-mode .auth-card{background:#fff;color:#212529}
+body.light-mode .form-control{background:#fff;color:#212529}
